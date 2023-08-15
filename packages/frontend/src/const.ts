@@ -47,6 +47,9 @@ export const FILE_TYPE_BROWSERSAFE = [
 	// backward compatibility
 	'audio/x-flac',
 	'audio/vnd.wave',
+
+	// 3dmodels
+	'model/gltf-binary',
 ];
 /*
 https://github.com/sindresorhus/file-type/blob/main/supported.js

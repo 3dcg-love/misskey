@@ -21,6 +21,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<template v-for="media in mediaList.filter(media => previewable(media))">
 				<XVideo v-if="media.type.startsWith('video')" :key="`video:${media.id}`" :class="$style.media" :video="media"/>
 				<XImage v-else-if="media.type.startsWith('image')" :key="`image:${media.id}`" :class="$style.media" class="image" :data-id="media.id" :image="media" :raw="raw"/>
+				<XModel v-else-if="media.type.startsWith('model')" :key="`model:${media.id}`" :class="$style.media" :video="media"/>
 			</template>
 		</div>
 	</div>
@@ -71,6 +72,7 @@ import 'photoswipe/style.css';
 import XBanner from '@/components/MkMediaBanner.vue';
 import XImage from '@/components/MkMediaImage.vue';
 import XVideo from '@/components/MkMediaVideo.vue';
+import XModel from '@/components/MkMediaModel.vue';
 import * as os from '@/os';
 import { FILE_TYPE_BROWSERSAFE } from '@/const';
 import { defaultStore } from '@/store';
@@ -255,7 +257,7 @@ onUnmounted(() => {
 const previewable = (file: misskey.entities.DriveFile): boolean => {
 	if (file.type === 'image/svg+xml') return true; // svgのwebpublic/thumbnailはpngなのでtrue
 	// FILE_TYPE_BROWSERSAFEに適合しないものはブラウザで表示するのに不適切
-	return (file.type.startsWith('video') || file.type.startsWith('image')) && FILE_TYPE_BROWSERSAFE.includes(file.type);
+	return (file.type.startsWith('video') || file.type.startsWith('image') || file.type.startsWith('model')) && FILE_TYPE_BROWSERSAFE.includes(file.type);
 };
 </script>
 
