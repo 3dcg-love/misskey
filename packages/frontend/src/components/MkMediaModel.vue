@@ -3,9 +3,20 @@ SPDX-FileCopyrightText: syuilo and other misskey contributors
 SPDX-License-Identifier: AGPL-3.0-only
 -->
 
+<!-- TODO: 読み込みはクリックしたときにする -->
+<!-- TODO: 読み込み前画像の用意-->
+<!-- TODO: 読み込み中画像の用意-->
 <template>
 	<p>これは3dmodelだよ</p>
-<!-- <div v-if="hide" :class="$style.hidden" @click="hide = false"> -->
+	<div>
+    <model-viewer 
+      src="https://moto.kokopi.me/files/d5435fa5-854e-4261-afb5-514cc163362c" 
+	  poster="https://moto.kokopi.me/files/0c779c1e-4e58-47a4-a458-c42f82d736a5"
+	  background-color="#FF5733"
+      camera-controls
+    ></model-viewer>
+  </div>
+	<!-- <div v-if="hide" :class="$style.hidden" @click="hide = false"> -->
 	<!-- 【注意】dataSaverMode が有効になっている際には、hide が false になるまでサムネイルや動画を読み込まないようにすること -->
 	<!-- <div :class="$style.sensitive">
 		<b v-if="video.isSensitive" style="display: block;"><i class="ti ti-alert-triangle"></i> {{ i18n.ts.sensitive }}{{ defaultStore.state.enableDataSaverMode ? ` (${i18n.ts.video}${video.size ? ' ' + bytes(video.size) : ''})` : '' }}</b>
@@ -37,6 +48,7 @@ import * as misskey from 'misskey-js';
 import bytes from '@/filters/bytes';
 import { defaultStore } from '@/store';
 import { i18n } from '@/i18n';
+import '@google/model-viewer';
 
 const props = defineProps<{
 	video: misskey.entities.DriveFile;
@@ -90,4 +102,9 @@ const hide = ref((defaultStore.state.nsfw === 'force' || defaultStore.state.enab
 	text-align: center;
 	font-size: 12px;
 }
+model-viewer {
+      background-color: #cccccc;
+}
+
 </style>
+
