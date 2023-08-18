@@ -8,14 +8,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 <!-- TODO: 読み込み中画像の用意-->
 <template>
 	<p>これは3dmodelだよ</p>
-	<div>
-    <model-viewer 
-      src="https://moto.kokopi.me/files/d5435fa5-854e-4261-afb5-514cc163362c" 
-	  poster="https://moto.kokopi.me/files/0c779c1e-4e58-47a4-a458-c42f82d736a5"
-	  background-color="#FF5733"
-      camera-controls
+	<div>	
+		<model-viewer 
+			src="https://moto.kokopi.me/files/d5435fa5-854e-4261-afb5-514cc163362c" 
+			poster="https://moto.kokopi.me/files/0c779c1e-4e58-47a4-a458-c42f82d736a5"
+			background-color="#FF5733"
+			camera-controls
+			loading="lazy"
+			reveal="manual"
+			@click="loadModel"
     ></model-viewer>
-  </div>
+  	</div>
 	<!-- <div v-if="hide" :class="$style.hidden" @click="hide = false"> -->
 	<!-- 【注意】dataSaverMode が有効になっている際には、hide が false になるまでサムネイルや動画を読み込まないようにすること -->
 	<!-- <div :class="$style.sensitive">
@@ -55,6 +58,11 @@ const props = defineProps<{
 }>();
 
 const hide = ref((defaultStore.state.nsfw === 'force' || defaultStore.state.enableDataSaverMode) ? true : (props.video.isSensitive && defaultStore.state.nsfw !== 'ignore'));
+
+const loadModel = (event) => {
+  const modelViewer = event.currentTarget;
+  modelViewer.dismissPoster();
+}
 </script>
 
 <style lang="scss" module>
