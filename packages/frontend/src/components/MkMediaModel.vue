@@ -12,7 +12,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 			loading="lazy"
 			reveal="manual"
 			@click="loadModel"
-    	>
+			@contextmenu.stop
+			>
 		</model-viewer>
   	</div>
 
@@ -47,6 +48,11 @@ function loadModel(event) {
 	width: 100%;
 	height: 100%;
 }
+
+model-viewer {
+      width: 100%;
+      height: 340px;
+}	
 
 .menu {
 	display: block;
