@@ -4,24 +4,35 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-	<div :class="$style.model">	
-		<model-viewer 
-			:src="modelUrl"
-			poster="/client-assets/view-3dmodel.png"
-			camera-controls
-			loading="lazy"
-			reveal="manual"
-			@click="loadModel"
-			@contextmenu.stop
-			>
-		</model-viewer>
-  	</div>
-
+	<div>
+		<div :class="$style.model">	
+			<model-viewer 
+				:src="modelUrl"
+				poster="/client-assets/view-3dmodel.png"
+				camera-controls
+				loading="lazy"
+				reveal="manual"
+				autoplay
+				@click="loadModel"
+				@contextmenu.stop
+				>
+			</model-viewer>
+		</div>
+		<!-- TODO: 最大化するボタンの設置 -->
+		<!-- <button 
+			:class="$style.menu" 
+			class="_button" 
+			@click.stop="OpenInNewWindow">
+			<i class="ti ti-dots" style="vertical-align: middle;">
+			</i>
+		</button> -->
+	</div>
 </template>
 
 <script lang="ts" setup>
 import * as misskey from 'misskey-js';
 import '@google/model-viewer';
+// import ModelView from '@/components/MkMediaModelView.vue';
 
 const props = defineProps<{
 	model: misskey.entities.DriveFile;
@@ -32,6 +43,10 @@ const modelUrl = $ref(props.model.url);
 function loadModel(event) {
   const modelViewer = event.currentTarget;
   modelViewer.dismissPoster();
+}
+
+// TODO: 外部ウィンドウ開くか内部ウィンドウで開く処理
+function OpenInNewWindow(ev: MouseEvent) {
 }
 
 </script>
@@ -49,9 +64,10 @@ function loadModel(event) {
 	height: 100%;
 }
 
+// TODO: 複数のメディアがアップロードされても適切なサイズになるようにする
 model-viewer {
-      width: 100%;
-      height: 340px;
+	width: 100%;
+	height: 340px;
 }	
 
 .menu {
