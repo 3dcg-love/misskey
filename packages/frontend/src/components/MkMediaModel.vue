@@ -5,18 +5,26 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <template>
 	<div>
-		<div :class="$style.model">	
-			<model-viewer 
-				:src="modelUrl"
-				poster="/client-assets/view-3dmodel.png"
-				camera-controls
-				loading="lazy"
-				reveal="manual"
-				autoplay
-				@click="loadModel"
-				@contextmenu.stop
-				>
-			</model-viewer>
+		<div>
+			<span style="font-size: 1.6em;"></span>
+			<b>{{ title }}</b>
+		</div>
+		<div>
+			<div :class="$style.model">	
+				<model-viewer 
+					ref="modelViewerRef"	
+					:src="modelUrl"
+					poster="/client-assets/view-3dmodel.png"
+					camera-controls
+					loading="lazy"
+					reveal="manual"
+					autoplay
+					@click="loadModel"
+					@contextmenu.stop
+					@load="handleModelLoad"
+					>
+				</model-viewer>
+			</div>
 		</div>
 		<!-- TODO: 最大化するボタンの設置 -->
 		<!-- <button 
@@ -32,7 +40,21 @@ SPDX-License-Identifier: AGPL-3.0-only
 <script lang="ts" setup>
 import * as misskey from 'misskey-js';
 import '@google/model-viewer';
+import { ref, computed } from 'vue';
+import bytes from '@/filters/bytes';
+
 // import ModelView from '@/components/MkMediaModelView.vue';
+
+const title = computed(() => `${props.model.name}  [${bytes(props.model.size)}]`);
+
+// モデルの読み込み状態を保持するref
+const modelLoaded = ref(false);
+
+const isModelLoaded = computed(() => modelLoaded.value);
+
+function handleModelLoad() {
+  modelLoaded.value = true;
+}
 
 const props = defineProps<{
 	model: misskey.entities.DriveFile;
@@ -48,6 +70,8 @@ function loadModel(event) {
 // TODO: 外部ウィンドウ開くか内部ウィンドウで開く処理
 function OpenInNewWindow(ev: MouseEvent) {
 }
+
+
 
 </script>
 
@@ -85,6 +109,5 @@ model-viewer {
 	bottom: 10px;
 	right: 10px;
 }
-
 
 </style>
