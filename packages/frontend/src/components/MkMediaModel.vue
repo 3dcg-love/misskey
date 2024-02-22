@@ -41,7 +41,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 import * as misskey from 'misskey-js';
 import '@google/model-viewer';
 import { ref, computed } from 'vue';
-import bytes from '@/filters/bytes';
+import bytes from '@/filters/bytes.js';
 
 // import ModelView from '@/components/MkMediaModelView.vue';
 
@@ -60,7 +60,7 @@ const props = defineProps<{
 	model: misskey.entities.DriveFile;
 }>();
 
-const modelUrl = $ref(props.model.url);
+const modelUrl = ref(props.model.url);
 
 function loadModel(event) {
   const modelViewer = event.currentTarget;
